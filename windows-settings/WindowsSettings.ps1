@@ -117,8 +117,8 @@ function Invoke-WindowsSettings {
         $display = if ($item.Value -eq 0) { 'なし' } else { "$($item.Value)分" }
         try {
             if (-not (Test-DryRun)) {
-                $out = powercfg /change $item.Key $item.Value 2>&1
-                if ($LASTEXITCODE -ne 0) { throw "powercfg 終了コード $LASTEXITCODE : $($out -join ' ')" }
+                $result = Invoke-NativeCapture -FilePath 'powercfg' -Arguments @('/change', $item.Key, [string]$item.Value)
+                if ($result.ExitCode -ne 0) { throw "powercfg 終了コード $($result.ExitCode) : $($result.Output)" }
             }
             Write-Change "電源タイムアウト: $($item.Label) を $display に設定"
         } catch {

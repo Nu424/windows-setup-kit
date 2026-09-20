@@ -40,8 +40,7 @@ function Initialize-WingetCli {
         return $false
     }
 
-    $version = ''
-    try { $version = ((& winget --version) | Out-String).Trim() } catch { }
+    $version = (Invoke-NativeCapture -FilePath 'winget' -Arguments @('--version')).Output
     Write-Log ("winget を確認した ({0})" -f $(if ($version) { $version } else { 'バージョン取得不可' })) 'INFO'
 
     if (Test-DryRun) {
@@ -51,7 +50,7 @@ function Initialize-WingetCli {
     }
 
     # 同意の記録だけが目的なので出力は捨てる。winget が stderr に書いても続行する
-    try { & winget list --accept-source-agreements --disable-interactivity 2>&1 | Out-Null } catch { }
+    [void](Invoke-NativeCapture -FilePath 'winget' -Arguments @('list','--accept-source-agreements','--disable-interactivity'))
     return $true
 }
 
@@ -60,12 +59,8 @@ function Initialize-WingetCli {
 function Test-WingetAppInstalled {
     param([Parameter(Mandatory)][string]$Id)
 
-    try {
-        $out = & winget list --id $Id --exact --disable-interactivity 2>&1 | Out-String
-    } catch {
-        return $false
-    }
-    return ($out -match [regex]::Escape($Id))
+    $result = Invoke-NativeCapture -FilePath 'winget' -Arguments @('list','--id',$Id,'--exact','--disable-interactivity')
+    return ($result.Output -match [regex]::Escape($Id))
 }
 
 # 1 本インストールする。成功 (またはスキップ) なら $true。

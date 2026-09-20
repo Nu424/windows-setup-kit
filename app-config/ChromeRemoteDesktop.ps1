@@ -33,7 +33,8 @@ function Test-CrdHostInstalled {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) { return $false }
 
     try {
-        $listed = winget list --id 'Google.ChromeRemoteDesktop' --exact --disable-interactivity | Out-String
+        $listed = (Invoke-NativeCapture -FilePath 'winget' `
+                       -Arguments @('list','--id','Google.ChromeRemoteDesktop','--exact','--disable-interactivity')).Output
         return ($listed -match [regex]::Escape('Google.ChromeRemoteDesktop'))
     } catch {
         return $false

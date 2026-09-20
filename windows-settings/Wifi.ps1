@@ -160,17 +160,17 @@ function Invoke-WifiSetup {
                 Write-Log "WiFi: 登録後に $ssid へ接続を試みる" 'DRY'
             }
         } else {
-            $out = netsh wlan add profile filename="$xmlPath" user=all 2>&1
-            if ($LASTEXITCODE -ne 0) { throw ($out -join ' ') }
+            $added = Invoke-NativeCapture -FilePath 'netsh' -Arguments @('wlan','add','profile',"filename=$xmlPath",'user=all')
+            if ($added.ExitCode -ne 0) { throw $added.Output }
             Write-Log "WiFi: プロファイル $label を登録した" 'OK'
 
             if ($connectAfter) {
                 if ($ssid) {
-                    $out = netsh wlan connect name="$ssid" 2>&1
-                    if ($LASTEXITCODE -eq 0) {
+                    $connected = Invoke-NativeCapture -FilePath 'netsh' -Arguments @('wlan','connect',"name=$ssid")
+                    if ($connected.ExitCode -eq 0) {
                         Write-Log "WiFi: $ssid への接続を要求した" 'OK'
                     } else {
-                        Write-Log "WiFi: $ssid に接続できなかった (圏外 / 無線アダプタ無効など): $($out -join ' ')" 'WARN'
+                        Write-Log "WiFi: $ssid に接続できなかった (圏外 / 無線アダプタ無効など): $($connected.Output)" 'WARN'
                     }
                 } else {
                     Write-Log "WiFi: プロファイル $label から SSID を読めなかったので自動接続は試さない" 'WARN'

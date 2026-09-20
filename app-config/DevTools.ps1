@@ -40,7 +40,7 @@ function Test-NodeInstalled {
     if (Get-Command node -ErrorAction SilentlyContinue) { return $true }
 
     try {
-        $listed = & volta list node | Out-String
+        $listed = (Invoke-NativeCapture -FilePath 'volta' -Arguments @('list','node')).Output
         return ($listed -match 'v\d+\.\d+')
     } catch {
         return $false
@@ -161,13 +161,11 @@ function Set-GitIdentity {
 <#
     GitHub CLI にログイン済みか。
     gh auth status は未ログインだと exit 1 を返す。
-    出力先が gh のバージョンで stdout/stderr と変わるうえ、
-    PowerShell 側の stderr リダイレクトは $ErrorActionPreference='Stop' 下で
-    例外になるため、cmd 側で捨てて終了コードだけを見る。
+    出力先が gh のバージョンで stdout / stderr と変わるので、両方まとめて捨てて
+    終了コードだけを見る。
 #>
 function Test-GhLoggedIn {
-    cmd /c 'gh auth status >nul 2>&1'
-    return ($LASTEXITCODE -eq 0)
+    return ((Invoke-NativeCapture -FilePath 'gh' -Arguments @('auth','status')).ExitCode -eq 0)
 }
 
 function Invoke-GhAuthLogin {

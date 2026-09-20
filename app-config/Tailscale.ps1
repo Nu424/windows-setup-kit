@@ -50,9 +50,7 @@ function Test-TailscaleLoggedIn {
     param([Parameter(Mandatory)][string]$ExePath)
 
     try {
-        # ステータスは標準出力に出る。ここでの stderr リダイレクトは
-        # $ErrorActionPreference='Stop' 下で例外になるので使わない。
-        $status = & $ExePath status --json | Out-String
+        $status = (Invoke-NativeCapture -FilePath $ExePath -Arguments @('status','--json')).Output
         return ($status -match '"BackendState"\s*:\s*"Running"')
     } catch {
         Write-Log "Tailscale: 接続状態を確認できなかったのでログイン済みか判断できない - $($_.Exception.Message)" 'WARN'

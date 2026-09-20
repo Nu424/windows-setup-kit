@@ -1,0 +1,13 @@
+# 実際の設定値（PCごとに違う / WiFiパスワードなどを含む）
+/settings.ps1
+
+# 自分で用意する実体データ。スクリプトだけを Git で管理する
+/assets/installers/*
+/assets/powertoys/*
+/assets/wifi/*
+!/assets/installers/.gitkeep
+!/assets/powertoys/.gitkeep
+!/assets/wifi/.gitkeep
+
+# 実行ログ
+*.log

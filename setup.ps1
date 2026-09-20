@@ -207,6 +207,7 @@ Write-Host '    1. Chrome に Google アカウントでログインして同期�
 Write-Host '       (拡張機能・ブックマーク・パスワードはこれで降ってくる)'
 Write-Host '    2. VS Code の設定同期 (左下のアカウント -> 設定の同期をオン)'
 Write-Host '    3. 同梱インストーラで入れたソフトの初回起動確認'
+Write-Host '    4. Claude Code: ターミナルで claude を実行してブラウザログイン'
 Write-Host ''
 Write-Host '  ※ PATH を反映させるため、作業を続けるならターミナルを開き直す。' -ForegroundColor DarkGray
 

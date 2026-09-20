@@ -26,7 +26,7 @@ USB メモリにフォルダごと入れて持ち歩き、`Setup.cmd` をダブ�
 |---|---|
 | Windows の設定 | PC 名、電源タイムアウト、リモートデスクトップ、拡張子と隠しファイルの表示、クリップボード履歴、スタートアップ無効化、WiFi プロファイル |
 | ソフトのインストール | winget での一括インストール、`assets\installers` に置いた exe / msi の一括インストール |
-| 入れたソフトの設定 | PowerToys 設定の復元、Tailscale ログイン、Chrome リモートデスクトップのホスト登録、Node LTS、git の名前とメール、GitHub CLI ログイン |
+| 入れたソフトの設定 | PowerToys 設定の復元、Tailscale ログイン、Chrome リモートデスクトップのホスト登録、Node LTS、git の名前とメール、GitHub CLI ログイン、Claude Code のログイン案内 |
 
 実行ログは `setup_日時.log` に残る（USB が書き込み禁止なら `%TEMP%` に出る）。
 失敗した項目は最後のサマリにまとまるので、まずそこを見る。
@@ -116,6 +116,7 @@ Google の OAuth と 2 段階認証は自動化できないので、ここは手
 - **Chrome の Google ログイン**: ログインして同期を ON にすれば、拡張機能・ブックマーク・パスワードは全部降ってくる
 - **Chrome リモートデスクトップの認証コード**: スクリプトが `remotedesktop.google.com/headless` を開くので、表示される `--code="..."` の中身を貼る。PIN 設定とサービスの自動起動化はスクリプトがやる
 - **GitHub CLI のログイン**: 最後に聞かれる。ブラウザ認証
+- **Claude Code のログイン**: ターミナルで `claude` を実行するとブラウザが開く。Pro / Max / Team / Enterprise / Console が必要（無料の Claude.ai プランでは使えない）
 - **VS Code の設定同期**: 左下のアカウントアイコンから。GitHub ログインで拡張機能ごと復元される
 
 ## つまずきポイント

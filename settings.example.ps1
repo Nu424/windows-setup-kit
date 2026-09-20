@@ -70,12 +70,14 @@
         # winget で入れるもの。ID は `winget search <名前>` で調べる。
         # Scope: 'machine' 全ユーザー / 'user' 自分だけ / $null は winget のお任せ
         #   Volta は 'user' 必須 (machine だと PATH が通らず volta install node が動かない)
+        #   Claude Code は portable exe。公式も管理者不要なので 'user'
         Apps = @(
             @{ Name = 'Google Chrome'; Id = 'Google.Chrome';              Scope = 'machine' }
             @{ Name = 'Tailscale';     Id = 'Tailscale.Tailscale';        Scope = 'machine' }
             @{ Name = 'PowerToys';     Id = 'Microsoft.PowerToys';        Scope = 'machine' }
             @{ Name = 'Git';           Id = 'Git.Git';                    Scope = 'machine' }
             @{ Name = 'GitHub CLI';    Id = 'GitHub.cli';                 Scope = 'machine' }
+            @{ Name = 'Claude Code';   Id = 'Anthropic.ClaudeCode';       Scope = 'user'    }
             @{ Name = 'uv';            Id = 'astral-sh.uv';               Scope = $null     }
             @{ Name = 'Volta';         Id = 'Volta.Volta';                Scope = 'user'    }
             @{ Name = 'VS Code';       Id = 'Microsoft.VisualStudioCode'; Scope = 'machine' }

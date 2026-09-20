@@ -6,6 +6,7 @@
       - volta で Node LTS を入れる
       - git の名前とメールを設定する
       - GitHub CLI にログインする
+      - Claude Code のログイン案内 (REPL をここで開くとセットアップが止まるので起動はしない)
 
     移植元は git の名前とメールを画面で案内するだけだったが、
     settings.ps1 に書いてあるか聞けば分かる値なので、ここで実際に設定してしまう。
@@ -216,6 +217,25 @@ function Invoke-GhAuthLogin {
     }
 }
 
+<#
+    Claude Code のログインは `claude` を起動した初回にブラウザで行う。
+    ここで claude を実行すると対話 REPL に入ってセットアップが止まるので、
+    入っているかと認証ファイルの有無だけ見て案内する。
+#>
+function Write-ClaudeCodeHint {
+    if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
+        return
+    }
+
+    $cred = Join-Path $env:USERPROFILE '.claude\.credentials.json'
+    if (Test-Path -LiteralPath $cred) {
+        Write-Log 'Claude Code: 認証ファイルがあるのでログイン済みに見える' 'OK'
+        return
+    }
+
+    Write-Log 'Claude Code: インストール済み。ターミナルを開き直して claude を実行するとブラウザログインになる (Pro / Max / Team / Enterprise / Console が必要)' 'INFO'
+}
+
 function Invoke-DevToolsSetup {
     param(
         [Parameter(Mandatory)][hashtable]$Settings,
@@ -231,4 +251,5 @@ function Invoke-DevToolsSetup {
     Install-NodeLts  -Settings $Settings
     Set-GitIdentity  -Settings $Settings -Unattended:$Unattended
     Invoke-GhAuthLogin -Settings $Settings -Unattended:$Unattended
+    Write-ClaudeCodeHint
 }

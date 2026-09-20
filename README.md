@@ -48,8 +48,6 @@ assets/                   スクリプトではない実体データ (中身は 
   installers/             exe / msi を置く
   powertoys/              PowerToys の設定ファイル一式
   wifi/                   WiFi プロファイルの XML
-
-ref/                      整理前の試作。実行には使わない
 ```
 
 分類フォルダにはスクリプトだけ、`assets/` にはデータだけを置く。
@@ -138,3 +136,7 @@ ID は `winget search <名前>` で調べられる。
 
 新しい設定項目そのものを増やす場合は、まず `common\Settings.ps1` の `Get-DefaultSettings`
 に既定値を書く。ここが設定キーの定義元で、`settings.ps1` は差分だけを持つ。
+
+## License
+
+[MIT](LICENSE)

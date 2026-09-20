@@ -36,8 +36,11 @@ USB メモリにフォルダごと入れて持ち歩き、`Setup.cmd` をダブ�
 ```
 Setup.cmd                 ダブルクリックする入口
 setup.ps1                 どの分類をどの順で流すかだけ
+Pack.cmd                  配布用 zip を作る入口
+pack.ps1                  その実体
 settings.ps1              ← 編集するのはここ一本 (Git 管理外)
 settings.example.ps1      その雛形
+dist/                     できた zip の置き場 (Git 管理外)
 
 common/                   全分類が使う土台 (ログ / 昇格 / レジストリ / 設定読み込み)
 windows-settings/         Windows そのものの設定
@@ -136,6 +139,24 @@ ID は `winget search <名前>` で調べられる。
 
 新しい設定項目そのものを増やす場合は、まず `common\Settings.ps1` の `Get-DefaultSettings`
 に既定値を書く。ここが設定キーの定義元で、`settings.ps1` は差分だけを持つ。
+
+## 配布用 ZIP
+
+スクリプト一式を 1 個の zip にする。ファイル名の日付は `v` + 実行日の `yymmdd`。
+
+```powershell
+.\Pack.cmd
+```
+
+`dist\windows-setup-matome-v260920.zip` ができる。中身は Git で管理しているものと同じで、
+`settings.ps1` と `assets` の実体データは入らない。
+
+日付を固定したいときは `-Stamp` に `yymmdd` を渡す。
+
+```powershell
+.\Pack.cmd -Stamp 260920
+.\Pack.cmd -DryRun
+```
 
 ## License
 

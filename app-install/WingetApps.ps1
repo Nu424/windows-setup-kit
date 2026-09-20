@@ -15,6 +15,9 @@
 # 目的 (そのソフトが入っている状態) は達成できているので成功として扱う。
 $script:WingetAlreadyInstalled = -1978335189
 
+# 0x8A150014。--exact で Id が一致しない。大文字小文字の違いでもこのコードになる。
+$script:WingetNoPackageFound = -1978335212
+
 # ログに出す表示名。Name が無ければ Id で代用する。
 function Get-WingetAppName {
     param([Parameter(Mandatory)][hashtable]$App)
@@ -120,7 +123,12 @@ function Install-WingetApp {
         if ($i -lt $attempts.Count - 1) {
             Write-Log "$name : winget が exit $exit で失敗。--scope を外して再試行する" 'WARN'
         } else {
-            Write-Log "$name : winget が exit $exit で失敗した ($id)。手動で入れる" 'FAIL'
+            $hint = if ($exit -eq $script:WingetNoPackageFound) {
+                '。--exact は Id の大文字小文字を区別するので、winget search で確認する'
+            } else {
+                ''
+            }
+            Write-Log "$name : winget が exit $exit で失敗した ($id)$hint。手動で入れる" 'FAIL'
         }
     }
     return $false

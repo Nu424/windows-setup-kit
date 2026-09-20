@@ -72,7 +72,7 @@
         #   Volta は 'user' 必須 (machine だと PATH が通らず volta install node が動かない)
         Apps = @(
             @{ Name = 'Google Chrome'; Id = 'Google.Chrome';              Scope = 'machine' }
-            @{ Name = 'Tailscale';     Id = 'tailscale.tailscale';        Scope = 'machine' }
+            @{ Name = 'Tailscale';     Id = 'Tailscale.Tailscale';        Scope = 'machine' }
             @{ Name = 'PowerToys';     Id = 'Microsoft.PowerToys';        Scope = 'machine' }
             @{ Name = 'Git';           Id = 'Git.Git';                    Scope = 'machine' }
             @{ Name = 'GitHub CLI';    Id = 'GitHub.cli';                 Scope = 'machine' }

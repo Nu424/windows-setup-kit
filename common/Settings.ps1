@@ -55,7 +55,7 @@ function Get-DefaultSettings {
             # Scope: 'machine' 全ユーザー / 'user' 自分だけ / $null は winget のお任せ
             Apps = @(
                 @{ Name = 'Google Chrome'; Id = 'Google.Chrome';              Scope = 'machine' }
-                @{ Name = 'Tailscale';     Id = 'tailscale.tailscale';        Scope = 'machine' }
+                @{ Name = 'Tailscale';     Id = 'Tailscale.Tailscale';        Scope = 'machine' }
                 @{ Name = 'PowerToys';     Id = 'Microsoft.PowerToys';        Scope = 'machine' }
                 @{ Name = 'Git';           Id = 'Git.Git';                    Scope = 'machine' }
                 @{ Name = 'GitHub CLI';    Id = 'GitHub.cli';                 Scope = 'machine' }
